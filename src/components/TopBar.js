@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import logo from "../assets/images/logo.svg";
-
+import { LogoutOutlined } from '@ant-design/icons';
 
 function TopBar(props) {
+
+    const {isLoggedIn, handleLogout } = props
 
     return (
         <header className="App-header">
@@ -11,6 +13,13 @@ function TopBar(props) {
             <span className="App-title">
                 Around Web
             </span>
+            {
+                isLoggedIn
+                    ?
+                    <LogoutOutlined className='logout' onClick={handleLogout}/>
+                    :
+                    null
+            }
         </header>
     );
 };
