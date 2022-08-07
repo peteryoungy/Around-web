@@ -1,6 +1,6 @@
 ## Introduction
 
-This repo is the front-end of [around](https://github.com/peteryoungy/Mars).
+This repository is the front-end of [around](https://github.com/peteryoungy/Mars).
 
 ## Prerequsites
 
