@@ -1,26 +1,23 @@
-import React, {Component} from 'react';
-import { Modal, Button, message } from 'antd';
-import {PostForm} from "./PostForm";
+import React, { Component } from "react";
+import { Modal, Button, message } from "antd";
+import { PostForm } from "./PostForm";
 import axios from "axios";
-import {BASE_URL, TOKEN_KEY} from "../constants";
-
+import { BASE_URL, TOKEN_KEY } from "../constants";
 
 class CreatePostButton extends Component {
-
     state = {
         visible: false,
-        confirmLoading: false
+        confirmLoading: false,
     };
 
     showModal = () => {
-        this.setState({visible: true});
+        this.setState({ visible: true });
     };
 
     handleOk = () => {
         this.setState({
-            confirmLoading: true
+            confirmLoading: true,
         });
-
 
         // step1: get file and message
         // step2: send uploading request to server
@@ -28,21 +25,27 @@ class CreatePostButton extends Component {
         this.postForm
             .validateFields()
             .then((form) => {
-                const { description, uploadPost } = form;
+                const { description, dragger: uploadPost } = form;
                 const { type, originFileObj } = uploadPost[0];
                 const postType = type.match(/^(image|video)/g)[0];
+
                 if (postType) {
                     let formData = new FormData();
                     formData.append("message", description);
                     formData.append("media_file", originFileObj);
 
+                    console.log(uploadPost);
+                    console.log(formData);
+
                     const opt = {
                         method: "POST",
                         url: `${BASE_URL}/upload`,
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+                            Authorization: `Bearer ${localStorage.getItem(
+                                TOKEN_KEY
+                            )}`,
                         },
-                        data: formData
+                        data: formData,
                     };
 
                     axios(opt)
@@ -56,21 +59,25 @@ class CreatePostButton extends Component {
                             }
                         })
                         .catch((err) => {
-                            console.log("Upload image/video failed: ", err.message);
+                            console.log(
+                                "Upload image/video failed: ",
+                                err.message
+                            );
                             message.error("Failed to upload image/video!");
                             this.setState({ confirmLoading: false });
                         });
                 }
             })
             .catch((err) => {
-                console.log("err ir validate form -> ", err);
+                console.log("err in validate form -> ", err);
+                this.setState({ confirmLoading: false });
             });
     };
-    handleCancel = () => {
-        console.log("cancel")
-        this.setState({visible: false});
-    };
 
+    handleCancel = () => {
+        console.log("cancel");
+        this.setState({ visible: false, confirmLoading: false });
+    };
 
     render() {
         const { visible, confirmLoading } = this.state;
@@ -87,7 +94,9 @@ class CreatePostButton extends Component {
                     okText="Create"
                     confirmLoading={confirmLoading}
                 >
-                    <PostForm ref={(refInstance) => (this.postForm = refInstance)} />
+                    <PostForm
+                        ref={(refInstance) => (this.postForm = refInstance)}
+                    />
                 </Modal>
             </div>
         );

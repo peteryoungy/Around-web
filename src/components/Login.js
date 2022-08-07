@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {BASE_URL} from "../constants";
+import { BASE_URL } from "../constants";
 
 function Login(props) {
-    const {handleLoggedIn} = props
+    const { handleLoggedIn } = props;
 
-    const onFinish = (values) =>{
-        console.log('Received values of form: ', values)
+    const onFinish = (values) => {
+        console.log("Received values of form: ", values);
 
-        const {username, password } = values
+        const { username, password } = values;
 
         // Login API: {"post", data, url, headers}
         const opt = {
@@ -19,25 +19,24 @@ function Login(props) {
             url: `${BASE_URL}/signin`,
             data: {
                 username: username,
-                password: password
+                password: password,
             },
-            headers: { "Content-Type": "application/json" }
-        }
+            headers: { "Content-Type": "application/json" },
+        };
         axios(opt)
-            .then( response => {
-                console.log(response)
-                if(response.status === 200) {
-                    const {data} = response
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    const { data } = response;
                     // send the token to Main
-                    handleLoggedIn(data)
+                    handleLoggedIn(data);
                 }
             })
-            .catch( err => {
-                console.log("login failed: ", err.message)
-                message.error("Login failed!")
-            })
-    }
-
+            .catch((err) => {
+                console.log("login failed: ", err.message);
+                message.error("Login failed!");
+            });
+    };
 
     return (
         <Form name="normal_login" className="login-form" onFinish={onFinish}>
@@ -46,8 +45,8 @@ function Login(props) {
                 rules={[
                     {
                         required: true,
-                        message: "Please input your Username!"
-                    }
+                        message: "Please input your Username!",
+                    },
                 ]}
             >
                 <Input
@@ -60,8 +59,8 @@ function Login(props) {
                 rules={[
                     {
                         required: true,
-                        message: "Please input your Password!"
-                    }
+                        message: "Please input your Password!",
+                    },
                 ]}
             >
                 <Input
@@ -72,14 +71,17 @@ function Login(props) {
             </Form.Item>
 
             <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="login-form-button"
+                >
                     Log in
                 </Button>
                 Or <Link to="/register">register now!</Link>
             </Form.Item>
         </Form>
     );
-
 }
 
 export default Login;
