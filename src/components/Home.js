@@ -38,8 +38,8 @@ function Home(props) {
                         user: image.user,
                         caption: image.message,
                         thumbnail: image.url,
-                        thumbnailWidth: 300,
-                        thumbnailHeight: 200,
+                        thumbnailWidth: 500,  // func: control the width of image
+                        thumbnailHeight: 300, // func: control the height of image
                     };
                 });
             return <PhotoGallery images={images} />;
@@ -52,7 +52,7 @@ function Home(props) {
                     {posts
                         .filter((post) => post.type === "video")
                         .map((post) => (
-                            <Col span={8} key={post.url}>
+                            <Col span={8} key={post.url} className="video-col">
                                 <video
                                     src={post.url}
                                     controls={true}
@@ -72,7 +72,7 @@ function Home(props) {
         // console.log("haha")
         // didMount: do search the first time -> search {type: all ,keyword:""}
         // didUpdate: after the first time -> search {type: keyword/user, keyword: text}
-
+        console.log("search option changed!")
         fetchPost(searchOption);
     }, [searchOption]);
 
@@ -124,12 +124,13 @@ function Home(props) {
         });
     };
 
+    // Is called when a new post uploaded
     const showPost = (type) => {
         // inform home to load all posts
         console.log("type -> ", type);
         setActiveTab(type);
 
-        // allow 3 sec in db
+        // allow 3 sec in backend and db to store the images just added
         setTimeout(() => {
             setSearchOption({ type: SEARCH_KEY.all, keyword: "" });
         }, 3000);
