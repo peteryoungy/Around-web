@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import { Tabs, message, Col, Row } from "antd";
-import { SEARCH_KEY, BASE_URL, TOKEN_KEY } from "../constants";
+import { SEARCH_KEY, TOKEN_KEY } from "../constants";
 import axios from "axios";
 import PhotoGallery from "./PhotoGallery";
 import CreatePostButton from "./CreatePostButton";
@@ -32,6 +32,7 @@ function Home(props) {
                 .filter((item) => item.type === "image")
                 .map((image) => {
                     return {
+                        // key: image.id,
                         postId: image.id,
                         src: image.url,
                         user: image.user,
@@ -86,11 +87,11 @@ function Home(props) {
         let url = "";
 
         if (type === SEARCH_KEY.all) {
-            url = `${BASE_URL}/search`;
+            url = `${process.env['REACT_APP_BASE_URL']}/search`;
         } else if (type === SEARCH_KEY.user) {
-            url = `${BASE_URL}/search?user=${keyword}`;
+            url = `${process.env['REACT_APP_BASE_URL']}/search?user=${keyword}`;
         } else {
-            url = `${BASE_URL}/search?keywords=${keyword}`;
+            url = `${process.env['REACT_APP_BASE_URL']}/search?keywords=${keyword}`;
         }
 
         const opt = {

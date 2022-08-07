@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { message } from "antd";
 import Gallery from "react-grid-gallery";
-import { BASE_URL, TOKEN_KEY } from "../constants";
+import { TOKEN_KEY } from "../constants";
 import axios from "axios";
 
 const captionStyle = {
@@ -55,7 +55,7 @@ function PhotoGallery(props) {
             console.log("delete image ", newImageArr);
             const opt = {
                 method: "DELETE",
-                url: `${BASE_URL}/post/${curImg.postId}`,
+                url: `${process.env['REACT_APP_BASE_URL']}/post/${curImg.postId}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
                 },

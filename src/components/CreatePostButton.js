@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, message } from "antd";
 import { PostForm } from "./PostForm";
 import axios from "axios";
-import { BASE_URL, TOKEN_KEY } from "../constants";
+import {TOKEN_KEY } from "../constants";
 
 class CreatePostButton extends Component {
     state = {
@@ -39,7 +39,7 @@ class CreatePostButton extends Component {
 
                     const opt = {
                         method: "POST",
-                        url: `${BASE_URL}/upload`,
+                        url: `${process.env['REACT_APP_BASE_URL']}/upload`,
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem(
                                 TOKEN_KEY

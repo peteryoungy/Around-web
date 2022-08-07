@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
-import { BASE_URL } from "../constants";
 import { Link } from "react-router-dom";
 
 function Register(props) {
@@ -19,7 +18,7 @@ function Register(props) {
         const { username, password } = values;
         const opt = {
             method: "POST",
-            url: `${BASE_URL}/signup`,
+            url: `${process.env['REACT_APP_BASE_URL']}/signup`,
             data: {
                 username: username,
                 password: password,

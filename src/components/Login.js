@@ -3,7 +3,6 @@ import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../constants";
 
 function Login(props) {
     const { handleLoggedIn } = props;
@@ -16,7 +15,7 @@ function Login(props) {
         // Login API: {"post", data, url, headers}
         const opt = {
             method: "POST",
-            url: `${BASE_URL}/signin`,
+            url: `${process.env['REACT_APP_BASE_URL']}/signin`,
             data: {
                 username: username,
                 password: password,
